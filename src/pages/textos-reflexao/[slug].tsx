@@ -3,15 +3,16 @@ import type { GetStaticProps, InferGetStaticPropsType } from 'next'
 import Image from 'next/image'
 import { useLiveQuery } from 'next-sanity/preview'
 
-import Container from '~/components/Container'
+import Container from '~/components/layout/Container'
 import { readToken } from '~/lib/sanity.api'
 import { getClient } from '~/lib/sanity.client'
 import { urlForImage } from '~/lib/sanity.image'
 import {
-  getPost,
-  type Post,
-  postBySlugQuery,
-  postSlugsQuery,
+  getTherapy,
+  therapySlugsQuery,
+  type Therapy,
+  getContentBySlug,
+  ReflectionText,
 } from '~/lib/sanity.queries'
 import type { SharedPageProps } from '~/pages/_app'
 import { formatDate } from '~/utils'
@@ -22,14 +23,15 @@ interface Query {
 
 export const getStaticProps: GetStaticProps<
   SharedPageProps & {
-    post: Post
+    reflectionText: ReflectionText
   },
   Query
 > = async ({ draftMode = false, params = {} }) => {
   const client = getClient(draftMode ? { token: readToken } : undefined)
-  const post = await getPost(client, params.slug)
+  console.log('client ::: ', client);
+  const reflectionText = await getContentBySlug(client, 'reflection-text',params.slug)
 
-  if (!post) {
+  if (!reflectionText) {
     return {
       notFound: true,
     }
@@ -39,7 +41,7 @@ export const getStaticProps: GetStaticProps<
     props: {
       draftMode,
       token: draftMode ? readToken : '',
-      post,
+      reflectionText,
     },
   }
 }
@@ -47,30 +49,14 @@ export const getStaticProps: GetStaticProps<
 export default function ProjectSlugRoute(
   props: InferGetStaticPropsType<typeof getStaticProps>,
 ) {
-  const [post] = useLiveQuery(props.post, postBySlugQuery, {
-    slug: props.post.slug.current,
-  })
 
   return (
     <Container>
       <section className="post">
-        {post.mainImage ? (
-          <Image
-            className="post__cover"
-            src={urlForImage(post.mainImage).url()}
-            height={231}
-            width={367}
-            alt=""
-          />
-        ) : (
-          <div className="post__cover--none" />
-        )}
         <div className="post__container">
-          <h1 className="post__title">{post.title}</h1>
-          <p className="post__excerpt">{post.excerpt}</p>
-          <p className="post__date">{formatDate(post._createdAt)}</p>
+          <h1 className="post__title">{props.reflectionText.title}</h1>
           <div className="post__content">
-            <PortableText value={post.body} />
+            <PortableText value={props.reflectionText.body} />
           </div>
         </div>
       </section>
@@ -80,10 +66,10 @@ export default function ProjectSlugRoute(
 
 export const getStaticPaths = async () => {
   const client = getClient()
-  const slugs = await client.fetch(postSlugsQuery)
+  const slugs = await client.fetch(therapySlugsQuery)
 
   return {
-    paths: slugs?.map(({ slug }) => `/post/${slug}`) || [],
+    paths: slugs?.map(({ slug }) => `/textos-reflexao/${slug}`) || [],
     fallback: 'blocking',
   }
 }

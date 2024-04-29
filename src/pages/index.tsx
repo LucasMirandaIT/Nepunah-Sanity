@@ -1,43 +1,46 @@
 import type { GetStaticProps, InferGetStaticPropsType } from 'next'
 import { useLiveQuery } from 'next-sanity/preview'
+import { PortableText } from '@portabletext/react'
 
 import Card from '~/components/Card'
-import Container from '~/components/Container'
+import Container from '~/components/layout/Container'
 import Welcome from '~/components/Welcome'
 import { readToken } from '~/lib/sanity.api'
 import { getClient } from '~/lib/sanity.client'
-import { getPosts, type Post, postsQuery } from '~/lib/sanity.queries'
+import { getContentBySlug } from '~/lib/sanity.queries'
 import type { SharedPageProps } from '~/pages/_app'
+import PortableImage from '~/components/PortableImage'
+import { useEffect } from 'react'
 
 export const getStaticProps: GetStaticProps<
   SharedPageProps & {
-    posts: Post[]
+    page: any
   }
 > = async ({ draftMode = false }) => {
   const client = getClient(draftMode ? { token: readToken } : undefined)
-  const posts = await getPosts(client)
+  const page = await getContentBySlug(client, 'page', 'home');
 
   return {
     props: {
       draftMode,
       token: draftMode ? readToken : '',
-      posts,
+      page
     },
   }
 }
 
 export default function IndexPage(
-  props: InferGetStaticPropsType<typeof getStaticProps>,
+  {page, ...props}: InferGetStaticPropsType<typeof getStaticProps>,
 ) {
-  const [posts] = useLiveQuery<Post[]>(props.posts, postsQuery)
+  useEffect(() => {
+    document.title = `${page.title} | Nepunah`;
+    document.documentElement.setAttribute('lang', 'pt-BR');
+  }, []);
   return (
-    <Container>
+    <Container {...props}>
       <section>
-        {posts.length ? (
-          posts.map((post) => <Card key={post._id} post={post} />)
-        ) : (
-          <Welcome />
-        )}
+        {/* {props.page} */}
+        <PortableText value={page.body} components={{ types: { image: PortableImage } }} />
       </section>
     </Container>
   )

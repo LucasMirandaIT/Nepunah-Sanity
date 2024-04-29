@@ -2,7 +2,9 @@ import '~/styles/global.css'
 
 import type { AppProps } from 'next/app'
 import { IBM_Plex_Mono, Inter, PT_Serif } from 'next/font/google'
-import { lazy } from 'react'
+import { lazy, useEffect } from 'react'
+import { Provider } from 'react-redux'
+import { store } from '~/stores/store'
 
 export interface SharedPageProps {
   draftMode: boolean
@@ -34,7 +36,8 @@ export default function App({
   Component,
   pageProps,
 }: AppProps<SharedPageProps>) {
-  const { draftMode, token } = pageProps
+  const { draftMode, token } = pageProps;
+
   return (
     <>
       <style jsx global>
@@ -48,10 +51,14 @@ export default function App({
       </style>
       {draftMode ? (
         <PreviewProvider token={token}>
-          <Component {...pageProps} />
+          <Provider store={store}>
+            <Component {...pageProps} />
+          </Provider>
         </PreviewProvider>
       ) : (
-        <Component {...pageProps} />
+        <Provider store={store}>
+          <Component {...pageProps} />
+        </Provider>
       )}
     </>
   )

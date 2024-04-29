@@ -1,8 +1,8 @@
 import { defineField, defineType } from 'sanity'
 
 export default defineType({
-  name: 'post',
-  title: 'Post',
+  name: 'page',
+  title: 'Páginas',
   type: 'document',
   fields: [
     defineField({
@@ -21,23 +21,37 @@ export default defineType({
       },
     }),
     defineField({
-      name: 'excerpt',
-      title: 'Excerpt',
-      type: 'text',
-      rows: 4,
+      name: 'submenus',
+      title: 'Possui submenus?',
+      type: 'boolean',
+      initialValue: false
     }),
     defineField({
-      name: 'mainImage',
-      title: 'Main image',
-      type: 'image',
-      options: {
-        hotspot: true,
-      },
+      name: 'submenusOrigin',
+      title: 'Origem dos submenus',
+      type: 'string',
+      hidden: ({document}) => !document.submenus
     }),
     defineField({
       name: 'body',
       title: 'Body',
-      type: 'blockContent',
+      type: 'array',
+      of: [
+        {
+          type: 'block'
+        },
+        {
+          type: 'image',
+          fields: [
+            {
+              name: 'alt',
+              type: 'string',
+              title: 'Descrição (Acessibilidade)'
+            }
+          ]
+        },
+      ],
+      hidden: ({document}) => !!document.submenus
     }),
   ],
   preview: {
