@@ -1,10 +1,7 @@
 import type { GetStaticProps, InferGetStaticPropsType } from 'next'
-import { useLiveQuery } from 'next-sanity/preview'
 import { PortableText } from '@portabletext/react'
 
-import Card from '~/components/Card'
 import Container from '~/components/layout/Container'
-import Welcome from '~/components/Welcome'
 import { readToken } from '~/lib/sanity.api'
 import { getClient } from '~/lib/sanity.client'
 import { getContentBySlug } from '~/lib/sanity.queries'

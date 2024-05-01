@@ -44,9 +44,8 @@ export async function getContentBySlug(
   client: SanityClient,
   contentName: string,
   slug: string,
-): Promise<Page> {
+): Promise<unknown> {
   const query = getBySlugQuery(contentName);
-  console.log('GetBySlug ::: ', query);
   return await client.fetch(query, {
     slug,
   })

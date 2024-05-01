@@ -3,13 +3,11 @@ import type { GetStaticProps, InferGetStaticPropsType } from 'next'
 import { readToken } from '~/lib/sanity.api'
 import { getClient } from '~/lib/sanity.client'
 import { getGlobalByTitle, getPages, getSubmenuItems } from '~/lib/sanity.queries'
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 
 import styles from '~/styles/components/header.module.css';
-import { isCSR } from '~/utils'
-import globalSlice, { setIsMobile } from '~/stores/global/globalSlice'
+import { setIsMobile } from '~/stores/global/globalSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '~/stores/store'
 import FacebookLogo from '../icons/FacebookLogo'
@@ -37,7 +35,6 @@ export default function Header(
   const dispatch = useDispatch();
   const [headerData, setHeaderData] = useState<any>({});
   const isMobile = useSelector((state: RootState) => state.global.isMobile);
-  // const isMobile = false;
   const [menuItems, setMenuItems] = useState([]);
   const client = getClient(props.draftMode ? { token: readToken } : undefined);
 
@@ -69,10 +66,6 @@ export default function Header(
       }
     });
   };
-
-  // const handleSocialMedia = (socialMediaURL) => {
-  //   console.log('Social Media :::: ', socialMediaURL);
-  // };
 
   useEffect(() => {
     addResizeListener();
@@ -113,9 +106,6 @@ export default function Header(
 
 
   const toggleMenu = (e) => {
-    // e.stopPropagation();
-    // const overflow = !isMenuOpen ? 'hidden' : 'auto';
-    // document.body.style.overflow = overflow;
     setIsMenuOpen(!isMenuOpen);
   };
 
@@ -126,18 +116,18 @@ export default function Header(
       <nav className={`${isMenuOpen ? styles.openedNav : ''}`}>
         <ul className={styles.menu}>
         {menuItems.map((page, index) => !page.submenus ? (
-            <li>
+            <li key={page}>
               <Link href={`/${page.slug.current}`} className={styles['menu-link']} replace>{page.title}</Link>
             </li>
           ) : (
-            <li className={`${styles['has-dropdown']}`}>
+            <li className={`${styles['has-dropdown']}`} key={page}>
               <span className={styles['menu-link']}>
                 {page.title}
                 <span className={styles['arrow']}></span>
               </span>
               <ul className={styles.submenu}>
                 {page.subItems.map((submenu) => (
-                  <li>
+                  <li key={submenu}>
                     <Link href={`/${page.slug.current}/${submenu.slug.current}`} className={styles['menu-link']} replace>{submenu.title}</Link>
                   </li>))}
               </ul>
