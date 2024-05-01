@@ -11,6 +11,7 @@ import type { SharedPageProps } from '~/pages/_app'
 import { formatDate } from '~/utils'
 import PortableImage from '~/components/PortableImage'
 import { useEffect } from 'react'
+import Router, { useRouter } from 'next/router'
 
 interface Query {
   [key: string]: string
@@ -23,16 +24,8 @@ export const getStaticProps: GetStaticProps<
   Query
 > = async ({ draftMode = false, params }) => {
   const client = getClient(draftMode ? { token: readToken } : undefined)
+  
   const page = await getContentBySlug(client, 'page', params.slug);
-
-  if (params.slug === 'home') {
-    return {
-      redirect: {
-        destination: '/'
-      }
-    }
-  }
-
   if (!page || !params.slug) {
     return {
       notFound: true,
@@ -51,10 +44,13 @@ export const getStaticProps: GetStaticProps<
 export default function SlugRoute(
   {page, ...props}: InferGetStaticPropsType<typeof getStaticProps>,
 ) {
+  const router = useRouter();
 
   useEffect(() => {
     document.title = `${page.title} | Nepunah`;
-    document.documentElement.setAttribute('lang', 'pt-BR')
+    document.documentElement.setAttribute('lang', 'pt-BR');
+
+    router.query.slug === 'home' && router.replace('/');
   }, []);
   return (
     <Container {...props}>

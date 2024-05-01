@@ -29,7 +29,7 @@ export const getStaticProps: GetStaticProps<
 > = async ({ draftMode = false, params = {} }) => {
   const client = getClient(draftMode ? { token: readToken } : undefined)
   console.log('client ::: ', client);
-  const reflectionText = await getContentBySlug(client, 'reflection-text',params.slug)
+  const reflectionText = await getContentBySlug(client, 'reflection-text', params.slug) as ReflectionText;
 
   if (!reflectionText) {
     return {
