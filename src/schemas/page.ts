@@ -44,6 +44,11 @@ export default defineType({
           type: 'image',
           fields: [
             {
+              name: 'alt',
+              type: 'string',
+              title: 'Descrição (Acessibilidade)'
+            },
+            {
               title: 'Layout',
               name: 'layout',
               type: 'string',
@@ -56,11 +61,15 @@ export default defineType({
                 ],
               }
           },
-            {
-              name: 'alt',
-              type: 'string',
-              title: 'Descrição (Acessibilidade)'
-            },
+          {
+            name: 'text',
+            title: 'text',
+            type: 'array',
+            of: [
+              {type: 'block'}
+            ],
+            hidden: ({parent}) => parent.layout === 'block'
+          },
           ]
         },
       ],
