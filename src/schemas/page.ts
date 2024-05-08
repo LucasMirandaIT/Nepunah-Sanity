@@ -44,10 +44,23 @@ export default defineType({
           type: 'image',
           fields: [
             {
+              title: 'Layout',
+              name: 'layout',
+              type: 'string',
+              initialValue: 'image-only',
+              options: {
+                list: [
+                  { title: 'Imagem', value: 'block' },
+                  { title: 'Imagem | Texto', value: 'flex' },
+                  { title: 'Texto | Imagem',  value: 'flex-reverse' },
+                ],
+              }
+          },
+            {
               name: 'alt',
               type: 'string',
               title: 'Descrição (Acessibilidade)'
-            }
+            },
           ]
         },
       ],
