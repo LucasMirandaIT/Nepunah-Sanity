@@ -63,8 +63,6 @@ export const getStaticPaths = async () => {
   const client = getClient()
   const slugs = await client.fetch(pageSlugsQuery)
 
-  console.log('Slugs ::: ', slugs);
-
   return {
     paths: slugs?.map((slug) => ({ params: { slug } })) || [],
     fallback: 'blocking',

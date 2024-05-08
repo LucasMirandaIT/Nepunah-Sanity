@@ -45,7 +45,6 @@ export default function Header(
       return { ...page, subItems };
     }));
     const data = await getGlobalByTitle(client, 'header');
-    console.log('Header Data ::: ', { pages, data });
     setHeaderData(data);
     setMenuItems(pages);
   };
@@ -134,19 +133,19 @@ export default function Header(
             </li>
           ))}
         </ul>
-        <ul>
+        <ul className={styles['contact-list']}>
           <li>
-            <a href="https://wa.me/+5511978619327" target='_blank'>
+            <a href="https://wa.me/+5511978619327" target='_blank' className={styles['contact-item']}>
               <WhatsappLogo />
             </a>
           </li>
           <li>
-            <a href="https://facebook.com/nepunah" target='_blank'>
+            <a href="https://facebook.com/nepunah" target='_blank' className={styles['contact-item']}>
               <FacebookLogo width="50px" height="50px" />
             </a>
           </li>
           <li>
-          <a href="https://instagram.com/nepunah" target='_blank'>
+          <a href="https://instagram.com/nepunah" target='_blank' className={styles['contact-item']}>
             <InstagramLogo />
           </a>
           </li>

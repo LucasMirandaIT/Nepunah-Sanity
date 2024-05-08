@@ -31,7 +31,6 @@ export default function Footer(
     const client = getClient(props.draftMode ? { token: readToken } : undefined);
 
     const data = await getGlobalByTitle(client, 'footer');
-    console.log('Footer Data ::: ', {data});
     setFooterData(data);
   };
 
