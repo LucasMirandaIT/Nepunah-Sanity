@@ -13,8 +13,10 @@ export default function PortableImage({ value }) {
   }
 
   const handleStyleForContainer = (layout) => {
-    return containerClasses[layout];
+    return {...containerClasses[layout], textAlign: 'justify'};
   };
+
+  const flexMargin = value.layout === 'flex' ? '0 16px 0 0' : '0 0 0 16px';
 
   return (
     <div style={handleStyleForContainer(value.layout)}>
@@ -26,7 +28,7 @@ export default function PortableImage({ value }) {
           maxWidth: '100%',
           aspectRatio: width / height,
           width: value.layout !== 'block' ? '30%' : '80%',
-          margin: value.layout === 'block' ? '0 auto': '',
+          margin: value.layout === 'block' ? '0 auto': flexMargin,
           display: 'block'
         }}
       />
