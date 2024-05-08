@@ -5,7 +5,6 @@ import { urlForImage } from '~/lib/sanity.image'
 export default function PortableImage({ value }) {
   const { width, height } = getImageDimensions(value)
   const imageURL = urlForImage(value).url();
-  console.log('Image Value ::: ', value);
 
   const containerClasses = {
     flex: {display: 'flex', justifyContent: 'space-between'},
