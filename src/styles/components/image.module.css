@@ -1,0 +1,33 @@
+.flex-image {
+    width: 90%;
+    margin: 0 auto;
+    display: block;
+}
+.flex, .flex-reverse, .block {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    text-align: justify;
+}
+@media screen and (min-width: 768px) {
+    .flex-image {
+        width: 30%;
+    }
+    .flex {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .flex .flex-image {
+        margin: 0 16px 0 0;
+    }
+    .flex-reverse {
+        flex-direction: row-reverse;
+        justify-content: space-between;
+    }
+    .flex-reverse .flex-image {
+        margin: 0 0 0 16px;
+    }
+    .block {
+        display: block;
+    }
+}
