@@ -51,7 +51,7 @@ export default function ProjectSlugRoute(
 
   return (
     <Container>
-      <div className={styles.body}>
+      <div className={`${styles.body} ${styles['page-body']}`}>
         <PortableText value={props.therapy.body} components={{ types: { image: PortableImage } }} />
       </div>
     </Container>
