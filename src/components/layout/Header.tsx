@@ -104,7 +104,7 @@ export default function Header(
   };
 
   const handleActiveMenu = (item) => {
-    setIsMenuOpen(false);
+    toggleMenu(null);
   };
 
   const toggleMenu = (e) => {
