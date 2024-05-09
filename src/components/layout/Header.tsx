@@ -124,7 +124,7 @@ export default function Header(
               <Link href={`/${page.slug.current}`} className={styles['menu-link']} replace>{page.title}</Link>
             </li>
           ) : (
-            <li className={`${styles['has-dropdown']}`} key={page} onClick={() => handleActiveMenu(page)}>
+            <li className={`${styles['has-dropdown']}`} key={page}>
               <span className={styles['menu-link']}>
                 {page.title}
                 <span className={styles['arrow']}></span>
