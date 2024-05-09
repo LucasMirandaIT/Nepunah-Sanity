@@ -144,6 +144,11 @@
   .navbar nav ul li {
     width: 100%;
   }
+  .navbar nav ul li a,
+  .navbar nav ul li a:visited,
+  .navbar nav ul li span {
+    color: white;
+  }
 
   .submenu {
     position: relative;
@@ -210,3 +215,4 @@
     text-align: center;
   }
 }
+
