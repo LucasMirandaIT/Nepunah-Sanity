@@ -28,7 +28,6 @@ export const getStaticProps: GetStaticProps<
   Query
 > = async ({ draftMode = false, params = {} }) => {
   const client = getClient(draftMode ? { token: readToken } : undefined)
-  console.log('client ::: ', client);
   const therapy = await getTherapy(client, params.slug)
 
   if (!therapy) {
@@ -52,7 +51,7 @@ export default function ProjectSlugRoute(
 
   return (
     <Container>
-      <div className={styles.body}>
+      <div className={`${styles.body} ${styles['page-body']}`}>
         <PortableText value={props.therapy.body} components={{ types: { image: PortableImage } }} />
       </div>
     </Container>

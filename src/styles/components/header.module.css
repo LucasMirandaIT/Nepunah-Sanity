@@ -41,6 +41,9 @@
   /* float: left;    */
   position: relative;
 }
+.navbar nav ul li a {
+  text-align: center;
+}
 
 .navbar>nav>ul>li>a,
 .navbar>nav>ul>li>span {
@@ -61,6 +64,13 @@
   visibility: visible;
   height: auto;
   transform: scaleY(1);
+}
+
+@media screen and (min-width: 768px) {
+  .navbar nav .menu li:hover .submenu {
+    width: 100vw;
+    max-width: 200px;
+  }
 }
 
 .submenu {
@@ -182,10 +192,21 @@
 
   nav:not(.openedNav) {
     display: none;
+    height: 0;
   }
 
   .openedNav {
-    display: block;
+    display: block !important;
+    height: 100%;
+    transition: height 1s;
   }
-  
+
+}
+
+.contact-list {
+  flex-direction: row !important;
+  li .contact-item {
+    display: block;
+    text-align: center;
+  }
 }
