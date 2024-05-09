@@ -29,8 +29,37 @@ export default defineType({
           type: 'block'
         },
         {
-          type: 'image'
-        }
+          type: 'image',
+          fields: [
+            {
+              name: 'alt',
+              type: 'string',
+              title: 'Descrição (Acessibilidade)'
+            },
+            {
+              title: 'Layout',
+              name: 'layout',
+              type: 'string',
+              initialValue: 'image-only',
+              options: {
+                list: [
+                  { title: 'Imagem', value: 'block' },
+                  { title: 'Imagem | Texto', value: 'flex' },
+                  { title: 'Texto | Imagem',  value: 'flex-reverse' },
+                ],
+              }
+          },
+          {
+            name: 'text',
+            title: 'text',
+            type: 'array',
+            of: [
+              {type: 'block'}
+            ],
+            hidden: ({parent}) => parent.layout === 'block'
+          },
+          ]
+        },
       ],
     }),
   ],

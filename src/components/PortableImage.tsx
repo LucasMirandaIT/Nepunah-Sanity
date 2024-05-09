@@ -27,7 +27,7 @@ export default function PortableImage({ value }) {
         style={{
           maxWidth: '100%',
           aspectRatio: width / height,
-          width: value.layout !== 'block' ? '30%' : '80%',
+          width: value.layout !== 'block' ? '30%' : '',
           margin: value.layout === 'block' ? '0 auto': flexMargin,
           display: 'block'
         }}

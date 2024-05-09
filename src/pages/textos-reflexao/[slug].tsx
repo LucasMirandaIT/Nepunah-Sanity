@@ -16,6 +16,7 @@ import {
 } from '~/lib/sanity.queries'
 import type { SharedPageProps } from '~/pages/_app'
 import { formatDate } from '~/utils'
+import styles from '~/styles/pages/pages.module.css';
 
 interface Query {
   [key: string]: string
@@ -53,8 +54,8 @@ export default function ProjectSlugRoute(
     <Container>
       <section className="post">
         <div className="post__container">
-          <h1 className="post__title">{props.reflectionText.title}</h1>
-          <div className="post__content">
+          <h1 className={styles['page-title']}>{props.reflectionText.title}</h1>
+          <div className={styles['page-body']}>
             <PortableText value={props.reflectionText.body} />
           </div>
         </div>

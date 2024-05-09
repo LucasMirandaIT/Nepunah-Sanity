@@ -1,6 +1,12 @@
 .body {
     margin-top: 8px;
 }
+.page-title {
+    text-align: center;
+}
+.page-body {
+    text-align: justify;
+}
 .body img {
     margin: 0 auto;
     display: block;
