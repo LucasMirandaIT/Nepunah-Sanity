@@ -103,8 +103,13 @@ export default function Header(
     });
   };
 
+  const handleActiveMenu = (item) => {
+    setIsMenuOpen(false);
+  };
 
   const toggleMenu = (e) => {
+    const bodyOverflow = !isMenuOpen ? 'hidden' : 'auto';
+    document.body.style.overflow = bodyOverflow;
     setIsMenuOpen(!isMenuOpen);
   };
 
@@ -115,18 +120,18 @@ export default function Header(
       <nav className={`${isMenuOpen ? styles.openedNav : ''}`}>
         <ul className={styles.menu}>
         {menuItems.map((page, index) => !page.submenus ? (
-            <li key={page}>
+            <li key={page} onClick={() => handleActiveMenu(page)}>
               <Link href={`/${page.slug.current}`} className={styles['menu-link']} replace>{page.title}</Link>
             </li>
           ) : (
-            <li className={`${styles['has-dropdown']}`} key={page}>
+            <li className={`${styles['has-dropdown']}`} key={page} onClick={() => handleActiveMenu(page)}>
               <span className={styles['menu-link']}>
                 {page.title}
                 <span className={styles['arrow']}></span>
               </span>
               <ul className={styles.submenu}>
                 {page.subItems.map((submenu) => (
-                  <li key={submenu}>
+                  <li key={submenu} onClick={() => handleActiveMenu(page)}>
                     <Link href={`/${page.slug.current}/${submenu.slug.current}`} className={styles['menu-link']} replace>{submenu.title}</Link>
                   </li>))}
               </ul>
